@@ -1,6 +1,5 @@
-import { Controller, Body, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
-import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { MessagePattern } from '@nestjs/microservices';
 
@@ -9,7 +8,8 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @MessagePattern({ cmd: 'createProject' })
-  create(@Body() createProjectDto: CreateProjectDto) {
+  create(createProjectDto: any) {
+    console.log(createProjectDto);
     return this.projectsService.create(createProjectDto);
   }
 
@@ -19,17 +19,17 @@ export class ProjectsController {
   }
 
   @MessagePattern({ cmd: 'findProject' })
-  findOne(@Param('id') id: string) {
+  findOne(id: string) {
     return this.projectsService.findOne(+id);
   }
 
   @MessagePattern({ cmd: 'editProject' })
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
+  update(id: string, updateProjectDto: UpdateProjectDto) {
     return this.projectsService.update(+id, updateProjectDto);
   }
 
   @MessagePattern({ cmd: 'deleteProject' })
-  remove(@Param('id') id: string) {
+  remove(id: string) {
     return this.projectsService.remove(+id);
   }
 }
