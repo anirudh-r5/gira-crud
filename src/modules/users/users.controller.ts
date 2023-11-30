@@ -23,12 +23,12 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'editUser' })
-  update(data: { email: string; updateUserDto: UpdateUserDto }) {
-    return this.usersService.update(data.email, data.updateUserDto);
+  async update(data: { email: string; updateUserDto: UpdateUserDto }) {
+    return await this.usersService.update(data.email, data.updateUserDto);
   }
 
   @MessagePattern({ cmd: 'deleteUser' })
-  remove(email: string) {
-    return this.usersService.remove(email);
+  async remove(email: string) {
+    return await this.usersService.remove(email);
   }
 }

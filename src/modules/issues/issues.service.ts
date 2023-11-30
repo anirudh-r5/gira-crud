@@ -21,11 +21,22 @@ export class IssuesService {
     return this.prisma.issue.findMany({ where: { projectId: projectId } });
   }
 
-  update(id: number, updateIssueDto: UpdateIssueDto) {
-    return this.prisma.issue.update({ where: { id }, data: updateIssueDto });
+  async update(id: number, updateIssueDto: UpdateIssueDto) {
+    try {
+      return await this.prisma.issue.update({
+        where: { id },
+        data: updateIssueDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 
-  remove(id: number) {
-    return this.prisma.issue.delete({ where: { id } });
+  async remove(id: number) {
+    try {
+      return await this.prisma.issue.delete({ where: { id } });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 }

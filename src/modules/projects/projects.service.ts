@@ -22,14 +22,22 @@ export class ProjectsService {
     });
   }
 
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return this.prisma.project.update({
-      where: { id },
-      data: updateProjectDto,
-    });
+  async update(id: number, updateProjectDto: UpdateProjectDto) {
+    try {
+      return await this.prisma.project.update({
+        where: { id },
+        data: updateProjectDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 
-  remove(id: number) {
-    return this.prisma.project.delete({ where: { id } });
+  async remove(id: number) {
+    try {
+      return await this.prisma.project.delete({ where: { id } });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 }

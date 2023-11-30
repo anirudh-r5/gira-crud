@@ -18,14 +18,22 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  update(email: string, updateUserDto: UpdateUserDto) {
-    return this.prisma.user.update({
-      where: { email },
-      data: updateUserDto,
-    });
+  async update(email: string, updateUserDto: UpdateUserDto) {
+    try {
+      return await this.prisma.user.update({
+        where: { email },
+        data: updateUserDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 
-  remove(email: string) {
-    return this.prisma.user.delete({ where: { email } });
+  async remove(email: string) {
+    try {
+      return await this.prisma.user.delete({ where: { email } });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 }

@@ -10,14 +10,22 @@ export class CommentsService {
     return this.prisma.comment.create({ data: createCommentDto });
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return this.prisma.comment.update({
-      where: { id },
-      data: updateCommentDto,
-    });
+  async update(id: number, updateCommentDto: UpdateCommentDto) {
+    try {
+      return await this.prisma.comment.update({
+        where: { id },
+        data: updateCommentDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 
-  remove(id: number) {
-    return this.prisma.comment.delete({ where: { id } });
+  async remove(id: number) {
+    try {
+      return await this.prisma.comment.delete({ where: { id } });
+    } catch (error) {
+      if (error.code === 'P2025') return 0;
+    }
   }
 }

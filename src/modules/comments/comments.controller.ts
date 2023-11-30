@@ -18,16 +18,14 @@ export class CommentsController {
 
   @MessagePattern({ cmd: 'editComment' })
   async update(data: { id: string; updateCommentDto: UpdateCommentDto }) {
-    return new CommentEntity(
-      await this.commentsService.update(
-        parseInt(data.id),
-        data.updateCommentDto,
-      ),
+    return await this.commentsService.update(
+      parseInt(data.id),
+      data.updateCommentDto,
     );
   }
 
   @MessagePattern({ cmd: 'deleteComment' })
   async remove(id: string) {
-    return new CommentEntity(await this.commentsService.remove(+id));
+    return await this.commentsService.remove(+id);
   }
 }
