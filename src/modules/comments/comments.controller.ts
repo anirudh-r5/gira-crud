@@ -17,9 +17,12 @@ export class CommentsController {
   }
 
   @MessagePattern({ cmd: 'editComment' })
-  async update(id: string, updateCommentDto: UpdateCommentDto) {
+  async update(data: { id: string; updateCommentDto: UpdateCommentDto }) {
     return new CommentEntity(
-      await this.commentsService.update(+id, updateCommentDto),
+      await this.commentsService.update(
+        parseInt(data.id),
+        data.updateCommentDto,
+      ),
     );
   }
 

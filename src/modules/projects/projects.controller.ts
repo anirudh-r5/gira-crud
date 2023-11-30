@@ -24,8 +24,11 @@ export class ProjectsController {
   }
 
   @MessagePattern({ cmd: 'editProject' })
-  update(id: string, updateProjectDto: UpdateProjectDto) {
-    return this.projectsService.update(+id, updateProjectDto);
+  update(data: { id: string; updateProjectDto: UpdateProjectDto }) {
+    return this.projectsService.update(
+      parseInt(data.id),
+      data.updateProjectDto,
+    );
   }
 
   @MessagePattern({ cmd: 'deleteProject' })

@@ -19,13 +19,11 @@ export class UsersController {
 
   @MessagePattern({ cmd: 'findUser' })
   findOne(email: string) {
-    console.log(email);
     return this.usersService.findOne(email);
   }
 
   @MessagePattern({ cmd: 'editUser' })
   update(data: { email: string; updateUserDto: UpdateUserDto }) {
-    console.log(data);
     return this.usersService.update(data.email, data.updateUserDto);
   }
 

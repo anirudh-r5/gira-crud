@@ -25,8 +25,8 @@ export class IssuesController {
   }
 
   @MessagePattern({ cmd: 'editIssue' })
-  update(id: string, updateIssueDto: UpdateIssueDto) {
-    return this.issuesService.update(+id, updateIssueDto);
+  update(data: { id: string; updateIssueDto: UpdateIssueDto }) {
+    return this.issuesService.update(parseInt(data.id), data.updateIssueDto);
   }
 
   @MessagePattern({ cmd: 'deleteIssue' })
