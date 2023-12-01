@@ -1,6 +1,5 @@
 import { Controller } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentEntity } from './entities/comment.entity';
 import { MessagePattern } from '@nestjs/microservices';
@@ -10,7 +9,7 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @MessagePattern({ cmd: 'createComment' })
-  async create(createCommentDto: CreateCommentDto) {
+  async create(createCommentDto: any) {
     return new CommentEntity(
       await this.commentsService.create(createCommentDto),
     );

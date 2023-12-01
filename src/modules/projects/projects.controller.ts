@@ -9,7 +9,6 @@ export class ProjectsController {
 
   @MessagePattern({ cmd: 'createProject' })
   create(createProjectDto: any) {
-    console.log(createProjectDto);
     return this.projectsService.create(createProjectDto);
   }
 
